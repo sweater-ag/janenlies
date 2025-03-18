@@ -1,0 +1,163 @@
+@font-face {
+    font-family: "Labil Grotesk";
+    src: url('assets/LabilGrotesk-Regular.a20a072.otf');
+}
+
+:root{
+    /* from 12 to 14px */
+    --bodycopy-font-size: clamp(0.625rem, 0.429rem + 0.3756vw, 0.8rem);
+    /* from 16 to 21px */
+    --primary-text-font-size: clamp(1rem, 0.9232rem + 0.3279vw, 1.3125rem);
+    --margin-s: clamp(1rem, 2.5vh, 2.5rem);
+    --margin-m: clamp(1.5rem, 4.1vh, 4.1rem);
+    --margin-l: clamp(1.5rem, 13vh, 13rem);
+    --margin-xl: clamp(4rem, 19vh, 19rem);
+}
+
+/* margins */
+.margin-bottom-s {
+    margin-bottom: var(--margin-s);
+}
+
+.margin-bottom-m {
+    margin-bottom: var(--margin-m);
+}
+
+.margin-bottom-l {
+    margin-bottom: var(--margin-l);
+}
+
+.margin-bottom-xl {
+    margin-bottom: var(--margin-xl);
+}
+/* ---- */
+
+/* text */
+.bodycopy{
+    font-size: var(--bodycopy-font-size);
+    line-height: 125%;
+}
+
+.primary-text{
+    font-size: var(--primary-text-font-size);
+    line-height: 135%;
+}
+/* ---- */
+
+body {
+    font-family: "Labil Grotesk";
+    
+}
+
+
+h1::selection, p::selection, em::selection {
+    color: rgb(0, 0, 0);
+    background-color: bisque;
+}
+
+.image{
+    /* width: 100%; */
+    /* max-width: 500px; */
+    /* height: auto; */
+    max-height: 45vh;
+    object-fit: contain;
+}
+
+/* .media{
+    background-color: bisque;
+}  */
+
+
+
+.main-grid{
+    display: grid;
+    grid-template-columns: 38% 40% 22%;
+    margin-left: 2.3rem;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+
+.grid-item-article{
+    padding-right: 5vw;
+    padding-top: max(2rem, 4vh);
+    padding-bottom: 3rem;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 60% 40%;
+}
+
+.grid-item-about-us{
+    padding-right: 12vw;
+    
+}
+
+.grid-item-info{
+    padding-right: 3vw;
+    padding-top: max(2rem, 4vh);
+}
+
+/* .grid-item{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end;
+} */
+
+.overflow-text{
+    overflow-y: auto;
+}
+
+
+.grid-item-about-us .bodycopy {
+    max-height: 60vh;
+}
+
+/* .grid-item-article p, .grid-item-article h1{
+    max-width: max(17.3vw, 250px);
+} */
+
+.article-text, .article-heading{
+    max-width: max(17.3vw, 250px);
+    grid-area: 2;
+}
+
+.grid-item-info p, .grid-item-info h1{
+    max-width: max(250px);
+    max-height: 50vh;
+}
+
+
+
+.rotate-your-device{
+    display: none;
+    height: 100vh;
+}
+
+.rotate-your-device p{
+    margin: auto;
+}
+
+@media screen and (max-width: 1092px) {
+    .grid-item-about-us{
+        padding-right: 10vh;
+    }
+
+}
+
+@media screen and (max-width: 834px) and (min-width: 600px) and (orientation : portrait){
+
+    .rotate-your-device{
+        display: flex;
+    }
+    .main-grid{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .main-grid{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
+}
