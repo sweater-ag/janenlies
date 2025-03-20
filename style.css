@@ -51,6 +51,14 @@
 
 }
 
+.hidden{
+    display: none !important;
+}
+
+.show{
+    display: block;
+}
+
 .primary-text{
     font-size: var(--primary-text-font-size);
     line-height: 135%;
@@ -65,11 +73,6 @@ body {
 .grey-text{
     color: #808080;
 } 
-
-h1::selection, p::selection, em::selection {
-    color: rgb(0, 0, 0);
-    background-color: bisque;
-}
 
 .tilt{
     margin: 0 var(--primary-text-font-size);
@@ -89,14 +92,12 @@ h1::selection, p::selection, em::selection {
     }
 }
 
-@media  (max-width: 750px) {
-    body{
-        overflow: auto;
-    }
-    .main-grid {
-        grid-template-columns: 1fr;
-    }
-    
+#desktop-layout{
+    display: block;
+}
+
+#mobile-layout{
+    display: none;
 }
 
 
