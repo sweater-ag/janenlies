@@ -4,7 +4,8 @@
 }
 
 :root{
-    --bodycopy-font-size: clamp(0.625rem, 0.5384rem + 0.1659vw, 0.73rem);
+    /* 13px min */
+    --bodycopy-font-size: clamp(0.6875rem, -0.0625rem + 0.8333vw, 0.8125rem);
     --primary-text-font-size: clamp(1rem, 1.0524rem + -0.1005vw, 0.9rem);
     --margin-xs: clamp(0.5rem, 3vh, 1.56rem);
     --margin-s: clamp(1rem, 9vh, 3.12rem);
@@ -14,6 +15,10 @@
 
 
 }
+
+/* *:hover {
+    outline: 1px solid red;
+} */
 
 /* margins */
 
@@ -54,7 +59,7 @@
 
 body {
     font-family: "Labil Grotesk";
-    
+    overflow: hidden;
 }
 
 .grey-text{
@@ -75,12 +80,48 @@ h1::selection, p::selection, em::selection {
     grid-template-columns: 39% 41% 1fr;
     height: 100vh;
     width: 100vw;
-    background-color: orange;
+    /* background-color: orange; */
 }
+
+@media  (max-width: 1440px) or (max-height: 828px) {
+    .main-grid {
+        grid-template-columns: 42vw 34vw 23vw;
+    }
+}
+
+@media  (max-width: 750px) {
+    body{
+        overflow: auto;
+    }
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    
+}
+
 
 .overflow-text{
     overflow-y: auto;
 }
+
+.overflow-container{
+    position: relative;
+    width: fit-content;
+}
+
+.overflow-container::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    /* width: 250px; */
+    width: 100%;
+    height: 10px;
+    /* background-color: palegreen; */
+    background: linear-gradient(transparent, white);
+    pointer-events: none;
+  }
+
 
 /* --------------column 1--------------  */
 .grid-item-article{
@@ -89,13 +130,19 @@ h1::selection, p::selection, em::selection {
     padding-left: 1rem;
 }
 .media-cont{
+    max-width: 24vw;
     padding-left: .7rem;
+    /* padding-top: 900px; */
     padding-bottom: 3.5rem;
     align-self: end;
 }
 .image{
-    max-width: 24vw;
     object-fit: contain;
+    width: 100%;
+}
+
+.video {
+    width: 100%;
 }
 .article-bodycopy{
     max-width: 240px;
@@ -109,6 +156,18 @@ h1::selection, p::selection, em::selection {
     max-width: 270px;
 }
 
+@media  (max-width: 1440px) or (max-height: 828px) {
+    .media-cont{
+        max-width: 80%;
+        padding-bottom: 1.7vh;
+    }
+
+    .grid-item-article{
+        grid-template-rows: 65vh 25vh 10vh;
+    }
+
+}
+
 /* --------------column 2--------------  */
 .grid-item-about-us{
     padding-top: 4rem;
@@ -117,45 +176,63 @@ h1::selection, p::selection, em::selection {
 .about-us-top-text{
     max-width: 340px;
 }
-.grid-item-about-us .bodycopy {
-    max-width: 75%;
-    max-height: 60vh;
+
+.about-us-bodycopy{
+    max-width: 540px;
+    padding-right: 2rem;
 }
+
+
+@media screen and (max-width: 1440px) {
+
+    .grid-item-about-us{
+        padding-top: 2rem;
+    }
+    .about-us-bodycopy {
+        max-width: 75%;
+        max-height: 60vh;
+    }
+
+}
+
+
 
 /* --------------column 3--------------  */
 .grid-item-info{
     padding-right: 4vw;
-    padding-top: max(1.3rem, 3vh);
-}
-.rotate-your-device{
-    display: none;
-    height: 100vh;
+    display: grid;
+    grid-template-rows: 15% min(380px, 60vh) auto 10% 20%;
+    height: 100%;
 }
 
-.rotate-your-device p{
-    margin: auto;
+.info-title{
+    align-self: end;
 }
 
-@media screen and (max-width: 1092px) {
-    .grid-item-about-us{
-        padding-right: 10vh;
+.info-bodycopy{
+    height: min(380px, 60vh);
+    /* margin-bottom: min; */
+}
+
+.info-address{
+    grid-row: 4;
+}
+
+.info-copyright{
+    grid-row: 5;
+    padding-bottom: 14px;
+}
+
+@media screen and (max-width: 1440px) {
+
+    .grid-item-info{
+        grid-template-rows: 15% min(380px, 60vh) auto 10% 7%;
+    }
+    .info-copyright{
+        align-self: end;
+      
     }
 
 }
 
-@media screen and (max-width: 834px) and (min-width: 600px) and (orientation : portrait){
-
-    .rotate-your-device{
-        display: flex;
-    }
-    .main-grid{
-        display: none;
-    }
-}
-
-@media screen and (max-width: 600px){
-    .main-grid{
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
-    }
-}
+/* ----------------------------------- */
