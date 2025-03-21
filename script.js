@@ -1,3 +1,5 @@
+gsap.registerPlugin(ScrollTrigger);
+
 const links = document.querySelectorAll('.link');
 const closeButton = document.querySelector('.button-close');
 const contentContainers = document.querySelectorAll('.content-cont');
@@ -8,6 +10,24 @@ const mediaContStartUp = document.querySelectorAll('.media-cont-start-up');
 const bodycopy = document.querySelectorAll('.bodycopy');
 const mobileQuery = matchMedia('(max-width: 750px)');
 const desktopQuery = matchMedia('(min-width: 751px)');
+
+//scroll text 
+
+// gsap.fromTo(".overflow-text", 
+//     { y: 0 },
+//     {
+//         y: -100, // Move the text downwards
+//         ease: "power1.out",
+//         scrollTrigger: {
+//             trigger: ".overflow-container",
+//             start: "20% top", // Start animation when 20% of the element is visible
+//             end: '+=100%',
+//             markers: true,
+            
+//             scrub: true // Smooth scrolling effect
+//         }
+//     }
+// );
 
 
 
@@ -66,10 +86,14 @@ const beforeClick = () => {
 
     if (mobileQuery.matches) { // Mobile
         links.forEach(link => link.classList.add("white-text"));
-    } else if (desktopQuery.matches) { // Desktop
-        gsap.set([".overflow-container", startUpHidden], { opacity: 0 });
+    } else if (desktopQuery.matches) { 
+        // gsap.set([".overflow-container", startUpHidden], { opacity: 0, y: 70 });
+        gsap.set([".overflow-container"], { opacity: 0, y: 10 });
+        gsap.set(startUpHidden, { opacity: 0 });
+        gsap.set(imageContent, { opacity: 0, y: 80 });
+
+
         gsap.set(mediaContStartUp, { opacity: 1 });
-        gsap.set(imageContent, { opacity: 0 });
         // gsap.set( bodycopy, {opacity: 0});
         gsap.set(".primary-text", { color: "white" });
         // gsap.set(startUpHidden, {opacity: 0});
@@ -97,62 +121,54 @@ const desktopStartUp = () => {
 };
 
 const gsapSetUp = () => {
-    // Create a timeline for smooth control
     const tl = gsap.timeline();
-
     tl
-
         .to(".primary-text", { //titles
             duration: 1,
             color: "black",
         }, "start")
-
         .to(mediaContStartUp, { //image black
             duration: 1,
             opacity: 0,
             ease: "power3.inOut"
         }, "start")
 
+        .to(startUpHidden,{
+            opacity: 1,
+            duration: 1,
+            
+            ease: "power3.inOut"
+        }, "start")
+
         .to(imageContent, { //garden
             duration: 1,
             opacity: 1,
+            y: 0,
             ease: "power3.inOut"
-        })
+        },)
+        .to(".overflow-container", {  
+            duration: 0.8,
+            opacity:1,
+            stagger: 0.8,
+            ease: "sine.out",
+        },"<=+0.8" )
 
-        .to([".overflow-container", startUpHidden], {  //texts
-            duration: 1,
-            opacity: 1,
-            ease: "power3.inOut",
-            stagger: 0.6
-        }, "start");
+        .to(".overflow-container", {  
+            duration: 0.5,
+            y: 0,
+            stagger: 0.9,
+            ease: "sine.out",
+        }, "<") 
 
-    // .to(startUpHidden, {
-    //     duration: 1.5,
-    //     opacity: 1,
-    //     rotation: 360,
-    //     stagger: 0.2,
-    //     ease: "power3.inOut"
-    // }, "-=1.5")
-
-    // .to(startUpHidden, {
-    //     duration: 1.5,
-    //     opacity: 1,
-    //     rotation: 360,
-    //     stagger: 0.2,
-    //     ease: "power3.inOut"
-    // }, "-=1.5")
-
-    // .from(bodycopy, {
-    //     duration: 2,
-    //     rotation: 20,
-    //     opacity: 0,
-    //     stagger: 0.2,
-    //     ease: "power3.inOut"
-    // }, "-=1.5")
+        
 
 };
 
 // -------- init --------
+document.addEventListener("scroll", () => {
+    console.log("scrolling");
+  });
+
 const init = () => {
     console.log("Links found:", links.length);
     hideAllContent();
@@ -163,3 +179,4 @@ const init = () => {
 };
 
 init();
+
