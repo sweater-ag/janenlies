@@ -3,7 +3,7 @@
     src: url('assets/LabilGrotesk-Regular.a20a072.otf');
 }
 
-:root{
+:root {
     /* 13px min */
     --bodycopy-font-size: clamp(0.6875rem, -0.0625rem + 0.8333vw, 0.8125rem);
     --primary-text-font-size: clamp(1rem, 1.0524rem + -0.1005vw, 0.9rem);
@@ -25,6 +25,7 @@
 .margin-bottom-xs {
     margin-bottom: var(--margin-xs);
 }
+
 .margin-bottom-s {
     margin-bottom: var(--margin-s);
 }
@@ -40,45 +41,52 @@
 .margin-bottom-xl {
     margin-bottom: var(--margin-xl);
 }
+
 /* ---- */
 
 /* text */
-.bodycopy{
+.bodycopy {
     font-size: var(--bodycopy-font-size);
     line-height: 125.2%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
 }
 
-.hidden{
+.hidden {
     display: none !important;
 }
 
-.show{
+.show {
     display: block;
 }
 
-.primary-text{
+.primary-text {
     font-size: var(--primary-text-font-size);
     line-height: 135%;
 }
+
+.white-text {
+    color: white ;
+}
+
+
+
 /* ---- */
 
 body {
     font-family: "Labil Grotesk";
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
-.grey-text{
+.grey-text {
     color: #808080;
-} 
+}
 
-.tilt{
+.tilt {
     margin: 0 var(--primary-text-font-size);
 }
 
-.main-grid{
+.main-grid {
     display: grid;
     grid-template-columns: 39% 41% 1fr;
     height: 100vh;
@@ -86,26 +94,26 @@ body {
     /* background-color: orange; */
 }
 
-@media  (max-width: 1440px) or (max-height: 828px) {
+@media (max-width: 1440px) or (max-height: 828px) {
     .main-grid {
         grid-template-columns: 42vw 34vw 23vw;
     }
 }
 
-#desktop-layout{
+#desktop-layout {
     display: block;
 }
 
-#mobile-layout{
+#mobile-layout {
     display: none;
 }
 
 
-.overflow-text{
+.overflow-text {
     overflow-y: auto;
 }
 
-.overflow-container{
+.overflow-container {
     position: relative;
     width: fit-content;
 }
@@ -121,23 +129,42 @@ body {
     /* background-color: palegreen; */
     background: linear-gradient(transparent, white);
     pointer-events: none;
-  }
+}
+
+.media-cont-start-up {
+    background-color: rgb(22, 116, 199);
+    /* span on a whole grid  */
+    width: 100%;
+    position: absolute;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    z-index: -1;
+    /* fix height later */
+    height: 100vh;
+}
+
+.image-start-up {
+    width: 100%;
+    object-fit: fill;
+}
 
 
 /* --------------column 1--------------  */
-.grid-item-article{
+.grid-item-article {
     display: grid;
     grid-template-rows: 70vh 20vh 10vh;
     padding-left: 1rem;
 }
-.media-cont{
+
+.media-cont {
     max-width: 24vw;
     padding-left: .7rem;
     /* padding-top: 900px; */
     padding-bottom: 3.5rem;
     align-self: end;
 }
-.image{
+
+.image {
     object-fit: contain;
     width: 100%;
 }
@@ -145,40 +172,41 @@ body {
 .video {
     width: 100%;
 }
-.article-bodycopy{
+
+.article-bodycopy {
     max-width: 240px;
     height: 100%;
 }
 
-.article-heading{
+.article-heading {
     align-self: end;
     padding-right: 2rem;
     padding-bottom: 14px;
     max-width: 270px;
 }
 
-@media  (max-width: 1440px) or (max-height: 828px) {
-    .media-cont{
+@media (max-width: 1440px) or (max-height: 828px) {
+    .media-cont {
         max-width: 80%;
         padding-bottom: 1.7vh;
     }
 
-    .grid-item-article{
+    .grid-item-article {
         grid-template-rows: 65vh 25vh 10vh;
     }
 
 }
 
 /* --------------column 2--------------  */
-.grid-item-about-us{
+.grid-item-about-us {
     padding-top: 4rem;
 }
 
-.about-us-top-text{
+.about-us-top-text {
     max-width: 340px;
 }
 
-.about-us-bodycopy{
+.about-us-bodycopy {
     max-width: 540px;
     padding-right: 2rem;
 }
@@ -186,9 +214,10 @@ body {
 
 @media screen and (max-width: 1440px) {
 
-    .grid-item-about-us{
+    .grid-item-about-us {
         padding-top: 2rem;
     }
+
     .about-us-bodycopy {
         max-width: 75%;
         max-height: 60vh;
@@ -199,39 +228,40 @@ body {
 
 
 /* --------------column 3--------------  */
-.grid-item-info{
+.grid-item-info {
     padding-right: 4vw;
     display: grid;
     grid-template-rows: 15% min(380px, 60vh) auto 10% 20%;
     height: 100%;
 }
 
-.info-title{
+.info-title {
     align-self: end;
 }
 
-.info-bodycopy{
+.info-bodycopy {
     height: min(380px, 60vh);
     /* margin-bottom: min; */
 }
 
-.info-address{
+.info-address {
     grid-row: 4;
 }
 
-.info-copyright{
+.info-copyright {
     grid-row: 5;
     padding-bottom: 14px;
 }
 
 @media screen and (max-width: 1440px) {
 
-    .grid-item-info{
+    .grid-item-info {
         grid-template-rows: 15% min(380px, 60vh) auto 10% 7%;
     }
-    .info-copyright{
+
+    .info-copyright {
         align-self: end;
-      
+
     }
 
 }
