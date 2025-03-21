@@ -33,6 +33,25 @@
         font-size: 1rem;
         text-decoration: none;
     }
+
+    .media-cont-start-up {
+        background-color: rgb(22, 116, 199);
+        /* span on a whole grid  */
+        width: 100%;
+        position: absolute;
+        grid-column-start: unset;
+        grid-column-end: unset;
+        z-index: -1;
+        top: 0;
+        /* fix height later */
+        height: 100vh;
+    }
+    
+    .image-start-up {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
 }
 
 .mobile-cont{

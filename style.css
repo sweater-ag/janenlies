@@ -66,7 +66,7 @@
 }
 
 .white-text {
-    color: white ;
+    color: white !important;
 }
 
 
@@ -144,8 +144,9 @@ body {
 }
 
 .image-start-up {
+    height: 100%;
     width: 100%;
-    object-fit: fill;
+    object-fit: cover;
 }
 
 
