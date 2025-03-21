@@ -154,6 +154,7 @@ body {
 .grid-item-article {
     display: grid;
     grid-template-rows: 70vh 20vh 10vh;
+    height: 100%;
     padding-left: 1rem;
 }
 
@@ -180,10 +181,12 @@ body {
 }
 
 .article-heading {
-    align-self: end;
+    /* align-self: end; */
     padding-right: 2rem;
     padding-bottom: 14px;
     max-width: 270px;
+    /* //put in the 3rd row  */
+    grid-row: 3;
 }
 
 @media (max-width: 1440px) or (max-height: 828px) {
