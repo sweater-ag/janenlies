@@ -132,27 +132,30 @@ const gsapSetUp = () => {
             stagger: 0.8,
             ease: "sine.out",
         })
+        
+        .add(scroll)
 };
 
 // -------- else --------
 
 const textY= (box)=>{
     const y = box.scrollHeight - box.closest(".overflow-container").clientHeight;
-    // console.log(y);
-    //return y if it is bigger then 5
     return y;
 }
 
-//calculate the biggest y 
-
 const scroll = () => {
-    console.log("scroll meow");
-    // gsap.set(".overflow-text", { y:-60 });
     const boxes = gsap.utils.toArray(".overflow-text");
-    
 
-    boxes.forEach(box => {
-        console.log(textY(box));
+    //if there is no overflow, disable scroll
+    const allSmallTexts = boxes.every(box => textY(box) <= 1);
+    if (allSmallTexts) {
+        document.body.style.overflow = "hidden"; 
+    } else {
+        document.body.style.overflow = "";  
+    }
+
+    boxes.forEach((box, i) => {
+        console.log( i, "box text overflow, px", textY(box));
         gsap.to(box, {
             y: -textY(box),
             ease: "none",
@@ -200,10 +203,9 @@ const init = () => {
     beforeClick();
     closeButton.addEventListener("click", handleCloseClick);
     linksMobile.forEach(link => link.addEventListener("click", handleLinkClick));
-    // mainGridDesktop.addEventListener("click", desktopStartUp);
-    desktopStartUp();
+    mainGridDesktop.addEventListener("click", desktopStartUp);
+    // desktopStartUp();
     mobileQuery.addEventListener("change", handleResize);
-    scroll();
 };
 
 init();
