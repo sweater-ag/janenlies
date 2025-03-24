@@ -6,9 +6,7 @@ const closeButton = document.querySelector('.button-close');
 const contentContainersMobile = document.querySelectorAll('.content-cont');
 const startUpImgMobile = document.querySelector('#mobile-layout .media-cont-start-up');
 
-
 //desktop 
-// const startUpHidden = document.querySelectorAll('#desktop-layout p:not(.primary-text)');
 const pictureDesktopContent = document.querySelector('.media-cont');
 const startUpImgDesktop = document.querySelector('#desktop-layout .media-cont-start-up');
 const mainGridDesktop = document.querySelector('#desktop-layout .main-grid');
@@ -62,14 +60,12 @@ const handleCloseClick = () => {
 
 mobileDefault = () => {
     startUpImgMobile.classList.remove("hidden");
-    // linksMobile.forEach(link => link.classList.add("white-text"));
     gsap.set(linksMobile, { color: "white" });
     linksMobile.forEach(link => link.classList.remove("hidden"));
 }
 
 const mobileStartUp = () => {
     startUpImgMobile.classList.add("hidden");
-
     gsap.to(linksMobile, {
         duration: 0.1,
         color: "black",
@@ -79,7 +75,7 @@ const mobileStartUp = () => {
 
 // -------- desktop content interaction --------
 
-let desktopStartScreen = true;
+let desktopStartScreen;
 
 
 desktopDefault = () => {
@@ -87,12 +83,11 @@ desktopDefault = () => {
     startUpImgDesktop.classList.remove("hidden");
     mainGridDesktop.style.cursor = "pointer";
 
-
     gsap.set(primaryTextsDesktop, { color: "white" });
     gsap.set(pictureDesktopContent, { opacity: 0, y: 80 });
     gsap.set(startUpImgDesktop, { opacity: 1 });
     gsap.set(desktopText , {opacity: 0});
-    // gsap.set(overflowContainerDesktop, { opacity: 0 });
+    gsap.set(overflowContainerDesktop, { opacity: 0 });
 }
 
 const desktopStartUp = () => {
@@ -118,51 +113,53 @@ const gsapSetUp = () => {
             ease: "power3.inOut"
         }, "start")
 
+        .to(overflowContainerDesktop, { //ugly white lines
+            duration: 0.1,
+            opacity: 1,
+            ease: "power3.inOut"
+        })
+
         .to(pictureDesktopContent, { //garden
             duration: 1,
             opacity: 1,
             y: 0,
             ease: "power3.inOut"
-        },)
-        .to(desktopText , {  
+        })
+
+        .to(desktopText, {  //text
             duration: 0.8,
             opacity:1,
             stagger: 0.8,
             ease: "sine.out",
         })
-        .to(overflowContainerDesktop, {
-            duration: 0.1,
-            opacity: 1,
-            ease: "power3.inOut"
-        }, "start+=0.9")
-        
-
 };
 
 // -------- else --------
 
+const scroll = () => {
+    console.log("scroll meow");
+    gsap.set(".overflow-text", { y:-60 });
+}
+
 const handleScroll = (e) => {
     e.preventDefault();
-    console.log("scrolling", e);
     e.stopPropagation();
 } 
 
-
-
 const handleResize = (e) => {
+    beforeClick();
     console.log("resize", e);
-    if (e.matches) {
-        console.log("mobile");
-    } else {
-        console.log("desktop");
-        beforeClick();
-    }
+    // if (e.matches) {
+    //     console.log("mobile");
+    // } else {
+    //     console.log("desktop");
+    // }
 }
 
 const beforeClick = () => {
+    desktopStartScreen = true;
     desktopDefault();
     mobileDefault();
-
     hideMobileOpenContent(); 
 };
 
@@ -170,13 +167,11 @@ const beforeClick = () => {
 // -------- init --------
 const init = () => {
     beforeClick();
-
     closeButton.addEventListener("click", handleCloseClick);
-    
     linksMobile.forEach(link => link.addEventListener("click", handleLinkClick));
     mainGridDesktop.addEventListener("click", desktopStartUp);
-
     mobileQuery.addEventListener("change", handleResize);
+    scroll();
 };
 
 init();

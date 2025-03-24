@@ -108,13 +108,15 @@ body {
 }
 
 
-.overflow-text {
+/* .overflow-text {
     overflow-y: auto;
-}
+} */
 
 .overflow-container {
     position: relative;
     width: fit-content;
+    /* overflow: hidden; */
+    border: 1px black solid;
 }
 
 
