@@ -70,12 +70,11 @@
 }
 
 
-
 /* ---- */
 
 body {
     font-family: "Labil Grotesk";
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .grey-text {
@@ -143,6 +142,7 @@ body {
     /* fix height later */
     height: 100vh;
 }
+
 
 .image-start-up {
     height: 100%;
