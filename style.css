@@ -109,14 +109,14 @@ body {
 
 
 /* .overflow-text {
-    overflow-y: auto;
+   padding-bottom: var(--bodycopy-font-size);
 } */
 
 .overflow-container {
     position: relative;
     width: fit-content;
-    /* overflow: hidden; */
-    border: 1px black solid;
+    overflow: hidden;
+    /* border: 1px black solid; */
 }
 
 
@@ -127,7 +127,7 @@ body {
     bottom: 0;
     /* width: 250px; */
     width: 100%;
-    height: 10px;
+    height: 4px;
     /* background-color: palegreen; */
     background: linear-gradient(transparent, white);
     pointer-events: none;

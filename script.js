@@ -136,10 +136,41 @@ const gsapSetUp = () => {
 
 // -------- else --------
 
+const textY= (box)=>{
+    const y = box.scrollHeight - box.closest(".overflow-container").clientHeight;
+    // console.log(y);
+    //return y if it is bigger then 5
+    return y;
+}
+
+//calculate the biggest y 
+
 const scroll = () => {
     console.log("scroll meow");
-    gsap.set(".overflow-text", { y:-60 });
-}
+    // gsap.set(".overflow-text", { y:-60 });
+    const boxes = gsap.utils.toArray(".overflow-text");
+    
+
+    boxes.forEach(box => {
+        console.log(textY(box));
+        gsap.to(box, {
+            y: -textY(box),
+            ease: "none",
+        scrollTrigger: {
+          trigger: "section",
+          start: "top top",
+            end: "+=142%",
+        pin: ".main-grid",
+          scrub: true,
+        //   markers: {
+        //     startColor: "fuchsia",
+        //     endColor: "fuchsia"
+        //   }
+        }
+        });
+        
+    });
+};
 
 const handleScroll = (e) => {
     e.preventDefault();
@@ -169,7 +200,8 @@ const init = () => {
     beforeClick();
     closeButton.addEventListener("click", handleCloseClick);
     linksMobile.forEach(link => link.addEventListener("click", handleLinkClick));
-    mainGridDesktop.addEventListener("click", desktopStartUp);
+    // mainGridDesktop.addEventListener("click", desktopStartUp);
+    desktopStartUp();
     mobileQuery.addEventListener("change", handleResize);
     scroll();
 };
