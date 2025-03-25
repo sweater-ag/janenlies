@@ -1,4 +1,5 @@
 gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin(Observer) 
 
 // mobile 
 const linksMobile = document.querySelectorAll('#mobile-layout .link');
@@ -175,6 +176,8 @@ const gsapSetUp = () => {
             ease: "power3.inOut"
         }, "start")
 
+        .add(scroll)
+
         .to(overflowContainerDesktop, { //ugly white lines
             duration: 0.1,
             opacity: 1,
@@ -198,47 +201,83 @@ const gsapSetUp = () => {
             ease: "sine.out",
         })
 
-        .add(scroll)
+        
 };
 
 // -------- else --------
 
-const textY = (box) => {
+const boxes = gsap.utils.toArray(".overflow-text");
+
+const textOverflowY = (box) => {
     const y = box.scrollHeight - box.closest(".overflow-container").clientHeight;
     return y;
 }
 
-const scroll = () => {
-    const boxes = gsap.utils.toArray(".overflow-text");
+boxes.forEach((box, i) => {
+   console.log(i, "box text overflow, px", textOverflowY(box));
+});
 
-    //if there is no overflow, disable scroll
-    const allSmallTexts = boxes.every(box => textY(box) <= 1);
-    if (allSmallTexts) {
-        document.body.style.overflow = "hidden";
-    } else {
-        document.body.style.overflow = "";
-    }
 
+const observeScrollUp = (deltaY) => { 
+    console.log("up")
     boxes.forEach((box, i) => {
-        console.log(i, "box text overflow, px", textY(box));
-        gsap.to(box, {
-            y: -textY(box),
-            ease: "none",
-            scrollTrigger: {
-                trigger: "section",
-                start: "top top",
-                end: "+=142%",
-                pin: ".main-grid",
-                scrub: true,
-                //   markers: {
-                //     startColor: "fuchsia",
-                //     endColor: "fuchsia"
-                //   }
+        gsap.to(box, { 
+            y: 0,
             }
-        });
-
+        );
     });
-};
+}
+
+const observeScrollDown = (deltaY) => {
+    // console.log("down" ,deltaY, console.log("up", deltaY, "box 1 ", textOverflowY(boxes[0]),"box 2 ",  textOverflowY(boxes[1]), "box 3 ", textOverflowY(boxes[2])));
+    boxes.forEach((box, i) => {
+        gsap.to(box, { 
+            duration:0.7,
+            ease: "none",
+            y: -textOverflowY(box),
+            }
+        );
+    });
+}
+
+const scroll = () => {
+    ScrollTrigger.observe({
+        target: window, // can be any element (selector text is fine)
+        type: "wheel,touch, scroll", // comma-delimited list of what to listen for ("wheel,touch,scroll,pointer")
+        onUp: (self) => observeScrollUp(self.deltaY),
+        onDown: (self) => observeScrollDown(self.deltaY),
+      });
+}
+    
+    // const boxes = gsap.utils.toArray(".overflow-text");
+
+    // //if there is no overflow, disable scroll
+    // const allSmallTexts = boxes.every(box => textOverflowY(box) <= 1);
+    // if (allSmallTexts) {
+    //     document.body.style.overflow = "hidden";
+    // } else {
+    //     document.body.style.overflow = "";
+    // }
+
+    // boxes.forEach((box, i) => {
+    //     console.log(i, "box text overflow, px", textOverflowY(box));
+    //     gsap.to(box, {
+    //         y: -textOverflowY(box),
+    //         ease: "none",
+    //         scrollTrigger: {
+    //             trigger: "section",
+    //             start: "top top",
+    //             end: "+=142%",
+    //             pin: ".main-grid",
+    //             scrub: true,
+    //             //   markers: {
+    //             //     startColor: "fuchsia",
+    //             //     endColor: "fuchsia"
+    //             //   }
+    //         }
+    //     });
+
+    // });
 
 const handleScroll = (e) => {
     e.preventDefault();

@@ -76,8 +76,8 @@
 
 body {
     font-family: "Labil Grotesk";
-    /* overflow: hidden; */
-    overflow-x: hidden;
+    overflow: hidden;
+    /* overflow-x: hidden; */
 }
 
 .grey-text {
@@ -118,8 +118,8 @@ body {
 .overflow-container {
     position: relative;
     width: fit-content;
-    overflow: hidden;
-    /* border: 1px black solid; */
+    /* overflow: hidden; */
+    border: 1px black solid;
 }
 
 
