@@ -137,7 +137,6 @@ const contentDisappearTransition = () => {
 let desktopStartScreen;
 
 
-
 desktopDefault = () => {
     desktopText.forEach(element => element.classList.add("hidden"));
     startUpImgDesktop.classList.remove("hidden");
