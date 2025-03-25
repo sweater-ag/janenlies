@@ -9,6 +9,7 @@ const startUpImgMobile = document.querySelector('#mobile-layout .media-cont-star
 const pictureMobileContent = document.querySelector('#mobile-layout .media-cont');
 const mobileText = document.querySelectorAll('#mobile-layout .bodycopy');
 const mobileCopyRightText = document.querySelector('#mobile-layout .info-copyright');
+const stickyContainerMobile = document.querySelector('#mobile-layout .titles-cont');
 
 
 //desktop 
@@ -26,7 +27,7 @@ const desktopQuery = window.matchMedia('(min-width: 751px)');
 // -------- mobile content interaction --------
 
 let currentlyOpenContentId = null;
-let mobileStartScreen = true;
+let mobileStartScreen;
 
 const hideMobileOpenContent = () => {
     contentContainersMobile.forEach(container => {
@@ -44,9 +45,12 @@ const showContent = (id) => {
 
 const handleLinkClick = (e) => {
     const targetId = e.target.id + "-content";
+    console.log("start screen", mobileStartScreen);
+    
     if (mobileStartScreen) {
         mobileStartUp();
-    }
+    } 
+
 
     //Content logic
     if (currentlyOpenContentId === targetId) {
@@ -66,10 +70,12 @@ const handleCloseClick = () => {
 };
 
 mobileDefault = () => {
+    mobileStartScreen = true;
     startUpImgMobile.classList.remove("hidden");
     gsap.set(linksMobile, { color: "white" });
     linksMobile.forEach(link => link.classList.remove("hidden"));
     gsap.set(startUpImgMobile, { opacity: 1 });
+    stickyContainerMobile.classList.remove("titles-cont--open");
 }
 
 const mobileStartUp = () => {
@@ -87,6 +93,7 @@ const mobileStartUp = () => {
             opacity: 0,
             ease: "power3.inOut"
         }, "start")
+        .add(() => { stickyContainerMobile.classList.add("titles-cont--open");});
     console.log("executes only once");
 }
 
@@ -218,22 +225,27 @@ boxes.forEach((box, i) => {
 });
 
 
-const observeScrollUp = (deltaY) => { 
-    console.log("up")
+const observeScrollUp = () => { 
+    //text goes down
+    console.log("scroll up"); //good
     boxes.forEach((box, i) => {
         gsap.to(box, { 
+            duration:1,
+            ease: "power2.out",
             y: 0,
             }
         );
     });
 }
 
-const observeScrollDown = (deltaY) => {
-    // console.log("down" ,deltaY, console.log("up", deltaY, "box 1 ", textOverflowY(boxes[0]),"box 2 ",  textOverflowY(boxes[1]), "box 3 ", textOverflowY(boxes[2])));
+const observeScrollDown = (e) => {
+    console.log("scroll down");
+    
     boxes.forEach((box, i) => {
+        // console.log(i, "box text overflow, px", textOverflowY(box));
         gsap.to(box, { 
-            duration:0.7,
-            ease: "none",
+            duration:1,
+            //  ease: "elastic.out",
             y: -textOverflowY(box),
             }
         );
@@ -244,40 +256,12 @@ const scroll = () => {
     ScrollTrigger.observe({
         target: window, // can be any element (selector text is fine)
         type: "wheel,touch, scroll", // comma-delimited list of what to listen for ("wheel,touch,scroll,pointer")
-        onUp: (self) => observeScrollUp(self.deltaY),
-        onDown: (self) => observeScrollDown(self.deltaY),
+        targets: boxes,
+        onUp: (e) => observeScrollUp(),
+        onDown: (e) => observeScrollDown(e.deltaY),
       });
 }
-    
-    // const boxes = gsap.utils.toArray(".overflow-text");
 
-    // //if there is no overflow, disable scroll
-    // const allSmallTexts = boxes.every(box => textOverflowY(box) <= 1);
-    // if (allSmallTexts) {
-    //     document.body.style.overflow = "hidden";
-    // } else {
-    //     document.body.style.overflow = "";
-    // }
-
-    // boxes.forEach((box, i) => {
-    //     console.log(i, "box text overflow, px", textOverflowY(box));
-    //     gsap.to(box, {
-    //         y: -textOverflowY(box),
-    //         ease: "none",
-    //         scrollTrigger: {
-    //             trigger: "section",
-    //             start: "top top",
-    //             end: "+=142%",
-    //             pin: ".main-grid",
-    //             scrub: true,
-    //             //   markers: {
-    //             //     startColor: "fuchsia",
-    //             //     endColor: "fuchsia"
-    //             //   }
-    //         }
-    //     });
-
-    // });
 
 const handleScroll = (e) => {
     e.preventDefault();
@@ -287,11 +271,6 @@ const handleScroll = (e) => {
 const handleResize = (e) => {
     beforeClick();
     console.log("resize", e);
-    // if (e.matches) {
-    //     console.log("mobile");
-    // } else {
-    //     console.log("desktop");
-    // }
 }
 
 const beforeClick = () => {

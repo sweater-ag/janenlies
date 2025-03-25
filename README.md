@@ -21,3 +21,10 @@ The `.media-cont` container is designed to hold **either an image or a video**. 
     </video>
 </div>
 ```
+
+Background color implementation : 
+
+- update 
+:root{
+--background-color: #fff;
+}
