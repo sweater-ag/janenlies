@@ -78,10 +78,11 @@ mobileDefault = () => {
     stickyContainerMobile.classList.remove("titles-cont--open");
 }
 
+const tl = gsap.timeline();
+
 const mobileStartUp = () => {
     //EXECUTES ONLY ONCE
     mobileStartScreen = false;
-    const tl = gsap.timeline();
     tl
         .to(linksMobile, { //titles
             duration: 0.5,
@@ -149,6 +150,7 @@ desktopDefault = () => {
     desktopText.forEach(element => element.classList.add("hidden"));
     startUpImgDesktop.classList.remove("hidden");
     mainGridDesktop.style.cursor = "pointer";
+    // pictureDesktopContent.classList.add("hidden");
 
     gsap.set(primaryTextsDesktop, { color: "white" });
     gsap.set(pictureDesktopContent, { opacity: 0 });
@@ -159,19 +161,24 @@ desktopDefault = () => {
 
 const desktopStartUp = () => {
     if (desktopStartScreen) {
+        // pictureDesktopContent.classList.remove("hidden");
         desktopText.forEach(element => element.classList.remove("hidden"));
         mainGridDesktop.style.cursor = "default";
         desktopStartScreen = false;
         gsapSetUp();
+    } else {
+        // desktopStartScreen = true;
+        // desktopDefault();
+        // location.reload();
     }
 };
 
 
 
+const tlDesktopSetUp = gsap.timeline();
 
 const gsapSetUp = () => {
-    const tl = gsap.timeline();
-    tl
+    tlDesktopSetUp
         .to(primaryTextsDesktop, { //titles
             duration: 0.5,
             color: "black",
@@ -183,7 +190,7 @@ const gsapSetUp = () => {
             ease: "power3.inOut"
         }, "start")
 
-        .add(scroll)
+        .add(observeST)
 
         .to(overflowContainerDesktop, { //ugly white lines
             duration: 0.1,
@@ -216,8 +223,12 @@ const gsapSetUp = () => {
 const boxes = gsap.utils.toArray(".overflow-text");
 
 const textOverflowY = (box) => {
-    const y = box.scrollHeight - box.closest(".overflow-container").clientHeight;
+    const y = (box.scrollHeight - box.closest(".overflow-container").clientHeight) +6;
+    if (y>10){
     return y;
+    } else {
+        return 0;
+    }
 }
 
 boxes.forEach((box, i) => {
@@ -252,14 +263,22 @@ const observeScrollDown = (e) => {
     });
 }
 
-const scroll = () => {
+const  observeST = () => {
     ScrollTrigger.observe({
-        target: window, // can be any element (selector text is fine)
-        type: "wheel,touch, scroll", // comma-delimited list of what to listen for ("wheel,touch,scroll,pointer")
+        type: "wheel,touch, scroll", 
         targets: boxes,
         onUp: (e) => observeScrollUp(),
         onDown: (e) => observeScrollDown(e.deltaY),
       });
+
+    ScrollTrigger.observe({
+        target: window,
+        ignore: [desktopText, primaryTextsDesktop, pictureDesktopContent],
+        onClick: (e) => {
+            console.log("click", e.target);
+            location.reload();
+        }
+    });
 }
 
 
