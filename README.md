@@ -15,7 +15,7 @@ The `.media-cont` container is designed to hold **either an image or a video**. 
 #### 🎥 Example Structure for Video:
 ```html
 <div class="media-cont">
-    <video class="video" autoplay>
+    <video class="video" autoplay loop>
         <source src="movie.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
