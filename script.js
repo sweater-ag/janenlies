@@ -271,14 +271,15 @@ const  observeST = () => {
         onDown: (e) => observeScrollDown(e.deltaY),
       });
 
-    ScrollTrigger.observe({
-        target: window,
-        ignore: [desktopText, primaryTextsDesktop, pictureDesktopContent],
-        onClick: (e) => {
-            console.log("click", e.target);
-            location.reload();
-        }
-    });
+      // goes to the home page as you click on the window, but not on the text
+    // ScrollTrigger.observe({
+    //     target: window,
+    //     ignore: [desktopText, primaryTextsDesktop, pictureDesktopContent],
+    //     onClick: (e) => {
+    //         console.log("click", e.target);
+    //         location.reload();
+    //     }
+    // });
 }
 
 
