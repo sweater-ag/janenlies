@@ -82,6 +82,24 @@ body {
     background-color: var(--background-color);
 }
 
+
+.scrollbar {
+    height: 100%;
+    /* background: #767676; */
+    position: absolute;
+    right: 0;
+    display: flex;
+}
+
+.scrollbar-thumb {
+    align-self: flex-start;
+    width: 7px;
+    height: 250px;
+    background: #BDBDBD;
+    border-radius: 7px;
+    transition: align-self 7s ;
+}
+
 .grey-text {
     color: #808080;
 }
@@ -287,11 +305,11 @@ body {
     }
 
     .grid-item-article{
-        grid-template-rows: 60vh 20vh auto;
+        grid-template-rows: 50vh 30vh auto;
     }
 
     .media-cont{
-        max-width: 24vw;
+        max-width: 20vw;
     }
 
     .margin-bottom-s{
@@ -301,7 +319,6 @@ body {
     .margin-bottom-l{
         margin-bottom: 1.2rem;
     }
-
 
 }
 

@@ -19,6 +19,7 @@ const mainGridDesktop = document.querySelector('#desktop-layout .main-grid');
 const desktopText = document.querySelectorAll('#desktop-layout .desktop-text');
 const primaryTextsDesktop = document.querySelectorAll('#desktop-layout .primary-text');
 const overflowContainerDesktop = document.querySelectorAll('#desktop-layout .overflow-container');
+const scrollBarThumb = document.querySelector('.scrollbar-thumb');
 
 const mobileQuery = window.matchMedia('(max-width: 750px)');
 const desktopQuery = window.matchMedia('(min-width: 751px)');
@@ -150,6 +151,7 @@ desktopDefault = () => {
     desktopText.forEach(element => element.classList.add("hidden"));
     startUpImgDesktop.classList.remove("hidden");
     mainGridDesktop.style.cursor = "pointer";
+    desktopStartScreen = true;
     // pictureDesktopContent.classList.add("hidden");
 
     gsap.set(primaryTextsDesktop, { color: "white" });
@@ -159,15 +161,23 @@ desktopDefault = () => {
     gsap.set(overflowContainerDesktop, { opacity: 0 });
 }
 
-const desktopStartUp = () => {
+const desktopHandleClick = () => {
+    // console.log("desktop click, desktopStartScreen: ", desktopStartScreen);
     if (desktopStartScreen) {
         // pictureDesktopContent.classList.remove("hidden");
         desktopText.forEach(element => element.classList.remove("hidden"));
-        mainGridDesktop.style.cursor = "default";
+        // mainGridDesktop.style.cursor = "default";
         desktopStartScreen = false;
+        tlDesktopSetUp.timeScale(1);
         gsapSetUp();
+        // tlDesktopSetUp.play(1);
+        console.log("desktop start", tlDesktopSetUp.time());
     } else {
-        // desktopStartScreen = true;
+        tlDesktopSetUp.timeScale(1.5);
+        tlDesktopSetUp.reverse();
+        desktopStartScreen = true;
+        console.log("desktop reverse", tlDesktopSetUp.time());
+
         // desktopDefault();
         // location.reload();
     }
@@ -191,7 +201,7 @@ const gsapSetUp = () => {
             ease: "power3.inOut"
         }, "start")
 
-        .add(observeST)
+        // .add(observeST)
         .to(overflowContainerDesktop, { //ugly white lines
             duration: 0.1,
             opacity: 1,
@@ -207,18 +217,11 @@ const gsapSetUp = () => {
 
         .to(desktopText, {  //text
             duration: 0.8,
-            y: 0,
-            x: 0,
-            scale: 1,
+            // y: 0,
             opacity: 1,
             stagger: 0.4,
             ease: "sine.out",
         })
-
-        .add(() => {
-            isAnimationComplete = true;
-            console.log("Animation is now complete.");
-        });
 
 };
 
@@ -235,9 +238,9 @@ const textOverflowY = (box) => {
     }
 }
 
-boxes.forEach((box, i) => {
-   console.log(i, "box text overflow, px", textOverflowY(box));
-});
+// boxes.forEach((box, i) => {
+//    console.log(i, "box text overflow, px", textOverflowY(box));
+// });
 
 
 const observeScrollUp = () => { 
@@ -251,13 +254,15 @@ const observeScrollUp = () => {
             }
         );
     });
+
+    scrollBarThumb.style.alignSelf = "flex-start";
 }
 
 const observeScrollDown = (e) => {
     console.log("scroll down");
     
     boxes.forEach((box, i) => {
-        // console.log(i, "box text overflow, px", textOverflowY(box));
+        console.log(i, "box text overflow, px", textOverflowY(box));
         gsap.to(box, { 
             duration:1,
             //  ease: "elastic.out",
@@ -265,26 +270,22 @@ const observeScrollDown = (e) => {
             }
         );
     });
+
+    scrollBarThumb.style.alignSelf = "flex-end";
 }
 
+
 const  observeST = () => {
+
+
     ScrollTrigger.observe({
         type: "wheel,touch, scroll", 
         targets: boxes,
         onUp: (e) => observeScrollUp(),
         onDown: (e) => observeScrollDown(e.deltaY),
       });
-
-      // goes to the home page as you click on the window, but not on the text
-    // ScrollTrigger.observe({
-    //     target: window,
-    //     ignore: [desktopText, primaryTextsDesktop, pictureDesktopContent],
-    //     onClick: (e) => {
-    //         console.log("click", e.target);
-    //         location.reload();
-    //     }
-    // });
 }
+
 
 
 const handleScroll = (e) => {
@@ -293,8 +294,11 @@ const handleScroll = (e) => {
 }
 
 const handleResize = (e) => {
-    beforeClick();
-    console.log("resize", e);
+    // it is just easier to reload, then to fix the weird glitching
+    // beforeClick();
+    // console.log("resize", e);
+
+    location.reload();
 }
 
 const beforeClick = () => {
@@ -319,11 +323,23 @@ const init = () => {
     beforeClick();
     closeButton.addEventListener("click", handleCloseClick);
     linksMobile.forEach(link => link.addEventListener("click", handleLinkClick));
-    mainGridDesktop.addEventListener("click", desktopStartUp);
-    // desktopStartUp();
+    mainGridDesktop.addEventListener("click", desktopHandleClick);
     mobileQuery.addEventListener("change", handleResize);
-    window.addEventListener("click", reloadPage);
+    observeST();
 };
 
 init();
+
+// document.addEventListener("keydown", (e) => {
+//     if (e.key === "p" || e.key === "P") {
+//       tlDesktopSetUp.pause(); // Pause the animation when 'P' is pressed
+//       console.log("Animation paused");
+//     } else if (e.key === "r" || e.key === "R") {
+//       tlDesktopSetUp.reverse(); // Reverse the animation when 'R' is pressed
+//       console.log("Animation reversed");
+//     } else if (e.key === "s" || e.key === "S") {
+//       tlDesktopSetUp.play(); // Play the animation when 'S' is pressed
+//       console.log("Animation playing");
+//     }
+//   });
 
