@@ -173,11 +173,12 @@ const desktopStartUp = () => {
     }
 };
 
-
+let isAnimationComplete = false;
 
 const tlDesktopSetUp = gsap.timeline();
 
 const gsapSetUp = () => {
+   
     tlDesktopSetUp
         .to(primaryTextsDesktop, { //titles
             duration: 0.5,
@@ -191,7 +192,6 @@ const gsapSetUp = () => {
         }, "start")
 
         .add(observeST)
-
         .to(overflowContainerDesktop, { //ugly white lines
             duration: 0.1,
             opacity: 1,
@@ -214,6 +214,11 @@ const gsapSetUp = () => {
             stagger: 0.4,
             ease: "sine.out",
         })
+
+        .add(() => {
+            isAnimationComplete = true;
+            console.log("Animation is now complete.");
+        });
 
         
 };
@@ -300,6 +305,15 @@ const beforeClick = () => {
     hideMobileOpenContent();
 };
 
+const reloadPage = () => {
+    const selection = window.getSelection();
+    console.log("selection", selection.toString().length);
+    if((selection.toString().length <= 0) && (isAnimationComplete)) {
+
+        location.reload();
+    }
+}
+
 
 // -------- init --------
 const init = () => {
@@ -309,6 +323,7 @@ const init = () => {
     mainGridDesktop.addEventListener("click", desktopStartUp);
     // desktopStartUp();
     mobileQuery.addEventListener("change", handleResize);
+    window.addEventListener("click", reloadPage);
 };
 
 init();
