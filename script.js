@@ -153,7 +153,7 @@ desktopDefault = () => {
     mainGridDesktop.style.cursor = "pointer";
     desktopStartScreen = true;
     // pictureDesktopContent.classList.add("hidden");
-
+    
     gsap.set(primaryTextsDesktop, { color: "white" });
     gsap.set(pictureDesktopContent, { opacity: 0 });
     gsap.set(startUpImgDesktop, { opacity: 1 });
@@ -230,6 +230,7 @@ const gsapSetUp = () => {
 const boxes = gsap.utils.toArray(".overflow-text");
 
 const textOverflowY = (box) => {
+
     const y = (box.scrollHeight - box.closest(".overflow-container").clientHeight) +6;
     if (y>10){
     return y;
@@ -238,13 +239,32 @@ const textOverflowY = (box) => {
     }
 }
 
+
+
+// const scrollBarThumbHeight = () => {
+
+//     let biggestOverflow = 0;
+//     // TEH OVERFLOW OF THE BIGGEST BOX
+//     boxes.forEach((box, i) => {
+//         const overflow = textOverflowY(box);
+//         if (overflow > biggestOverflow) {
+//             biggestOverflow = overflow;
+//         }
+//     } );
+
+//     return (window.innerHeight / (window.innerHeight + biggestOverflow)) * window.innerHeight;
+// }
+
+
 // boxes.forEach((box, i) => {
 //    console.log(i, "box text overflow, px", textOverflowY(box));
 // });
 
+// scrollBarThumb.style.height = scrollBarThumbHeight() + "px";
 
 const observeScrollUp = () => { 
     //text goes down
+
     console.log("scroll up"); //good
     boxes.forEach((box, i) => {
         gsap.to(box, { 
@@ -253,30 +273,42 @@ const observeScrollUp = () => {
             y: 0,
             }
         );
-    });
 
-    scrollBarThumb.style.alignSelf = "flex-start";
+        gsap.to(scrollBarThumb, {
+            duration: 1,
+            y: 0,
+            ease: "power2.out",
+        });
+    });
 }
 
 const observeScrollDown = (e) => {
-    console.log("scroll down");
-    
+
     boxes.forEach((box, i) => {
-        console.log(i, "box text overflow, px", textOverflowY(box));
+        // console.log(i, "box text overflow, px", textOverflowY(box));
         gsap.to(box, { 
             duration:1,
             //  ease: "elastic.out",
             y: -textOverflowY(box),
             }
-        );
-    });
+        );  
 
-    scrollBarThumb.style.alignSelf = "flex-end";
+        console.log("window.innerHeight", window.innerHeight- 250);
+
+        gsap.to(scrollBarThumb, {
+            duration: 1,
+            // y: ( window.innerHeight - scrollBarThumb.height),
+            y: (window.innerHeight - (scrollBarThumb.clientHeight+ 2)),
+            // ease: "power2.out",
+        });
+    });
 }
+
 
 
 const  observeST = () => {
 
+    // scrollBarThumb.style.height = ;
 
     ScrollTrigger.observe({
         type: "wheel,touch, scroll", 

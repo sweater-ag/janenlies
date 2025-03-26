@@ -88,16 +88,19 @@ body {
     /* background: #767676; */
     position: absolute;
     right: 0;
-    display: flex;
+    /* display: flex; */
+    z-index: -1;
+    padding-right: .2rem;
 }
 
 .scrollbar-thumb {
-    align-self: flex-start;
+    /* align-self: flex-start; */
     width: 7px;
-    height: 250px;
+    height: 80vh;
     background: #BDBDBD;
     border-radius: 7px;
-    transition: align-self 7s ;
+
+    /* transition: align-self 7s ; */
 }
 
 .grey-text {
