@@ -162,6 +162,7 @@ body {
 
 .media-cont {
     max-width: 24vw;
+    /* max-height: 50vh; */
     padding-left: .7rem;
     /* padding-top: 900px; */
     /* background-color: blue; */  /* for debugging */
@@ -196,6 +197,7 @@ body {
     .media-cont {
         max-width: 80%;
         padding-bottom: 1.7vh;
+
     }
 
     .grid-item-article {
@@ -271,6 +273,35 @@ body {
         align-self: end;
 
     }
+
+}
+
+
+@media (max-height: 670px) and (min-width: 750px) {
+    /* body{
+        background-color: lavender;
+    } */
+
+    .grid-item-info{
+        grid-template-rows: 7% repeat(4, auto);
+    }
+
+    .grid-item-article{
+        grid-template-rows: 60vh 20vh auto;
+    }
+
+    .media-cont{
+        max-width: 24vw;
+    }
+
+    .margin-bottom-s{
+        margin-bottom: .7rem;
+    }
+
+    .margin-bottom-l{
+        margin-bottom: 1.2rem;
+    }
+
 
 }
 

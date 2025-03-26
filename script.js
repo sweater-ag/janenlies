@@ -220,7 +220,6 @@ const gsapSetUp = () => {
             console.log("Animation is now complete.");
         });
 
-        
 };
 
 // -------- else --------
