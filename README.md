@@ -22,9 +22,21 @@ The `.media-cont` container is designed to hold **either an image or a video**. 
 </div>
 ```
 
-Background color implementation : 
 
-- update 
+Also media layout renders based on the media width. For example:
+
+| Square picture:  |       Horisontal picture:               |
+| -------- | ------- |
+| ![alt text](image-2.png) |  ![alt text](image-1.png)  |
+
+
+
+### Background color implementation
+
+``` css
 :root{
 --background-color: #fff;
 }
+```
+
+

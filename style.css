@@ -164,7 +164,7 @@ body {
     max-width: 24vw;
     padding-left: .7rem;
     /* padding-top: 900px; */
-    background-color: blue;
+    /* background-color: blue; */  /* for debugging */
     padding-bottom: 3.5rem;
     align-self: end;
 }
