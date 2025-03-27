@@ -46,7 +46,11 @@ let overflowY = 1000;
 
 const boxInstances = boxes.map(box => new BoxOverflow(box));
 
-body.style.height = (window.innerHeight + overflowY) + "px";
+
+window.innerWidth > 750 && (body.style.height = (window.innerHeight + overflowY) + "px");
+
+
+
 
 // window.addEventListener('resize', () => {
 //     overflowY = 0;
