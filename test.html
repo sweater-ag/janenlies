@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Div Resize</title>
+  <style>
+    .resizable-div {
+      width: 300px;
+      max-height: 300px; /* Default max height */
+      overflow: hidden;
+      border: 1px solid #ccc;
+      padding: 10px;
+      transition: max-height 0.2s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="myDiv" class="resizable-div">
+    <!-- Content here -->
+    is
+    covered with a lot of small crystals
+    with a waxed
+    texture that create a ragged and napped surface, rom which waterdrops roll off the surface
+    and
+    take
+    dust and dirt particles with them.<br><br>
+
+    Growth and nature are a obvious but all-encompassing combination. As garden architects, Jan
+    en
+    Lies
+    do not confine themselves to the present moment, but always think long-term.
+    They research, adapt to, and make use of the beauty in the qualities and growth found in the
+    green
+    world around us. When a tree grows, its branches extend and widen, the tree becomes taller
+    and is h fjisapjfdopasfkjpodsakfopasdkfpda skfopamfldsaj skfoskfopamfldsajpamfldsaj mfpfakslmsfkla
+
+  </div>
+  <script>
+    function adjustDivSize() {
+      const div = document.getElementById("myDiv");
+      const scrollHeight = div.scrollHeight;
+      const currentHeight = div.clientHeight;
+      const overflow = scrollHeight - currentHeight;
+      if (overflow > 0 && overflow <= 10) {
+        div.style.maxHeight = (currentHeight + overflow) + "px";
+      } else if (overflow > 10) {
+        div.style.overflowY = "auto";
+      } else {
+        div.style.overflowY = "hidden";
+      }
+    }
+    window.addEventListener("load", adjustDivSize);
+    window.addEventListener("resize", adjustDivSize);
+  </script>
+</body>
+</html>

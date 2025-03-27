@@ -30,6 +30,8 @@ const desktopQuery = window.matchMedia('(min-width: 751px)');
 
 let currentlyOpenContentId = null;
 let mobileStartScreen;
+let isOverflow = false;
+
 
 const hideMobileOpenContent = () => {
     contentContainersMobile.forEach(container => {
@@ -151,7 +153,6 @@ let desktopStartScreen;
 const desktopDefault = () => {
     desktopText.forEach(element => element.classList.add("hidden"));
     startUpImgDesktop.classList.remove("hidden");
-    // scrollBarThumb.classList.add("hidden");
     mainGridDesktop.style.cursor = "pointer";
     desktopStartScreen = true;
     // pictureDesktopContent.classList.add("hidden");
@@ -164,10 +165,9 @@ const desktopDefault = () => {
 }
 
 const desktopHandleClick = () => {
+    observeST();
     // console.log("desktop click, desktopStartScreen: ", desktopStartScreen);
     if (desktopStartScreen) {
-        // pictureDesktopContent.classList.remove("hidden");
-        // scrollBarThumb.classList.remove("hidden");
         desktopText.forEach(element => element.classList.remove("hidden"));
         // mainGridDesktop.style.cursor = "default";
         desktopStartScreen = false;
@@ -185,9 +185,22 @@ const desktopHandleClick = () => {
 
 let isAnimationComplete = false;
 
+
+
 const tlDesktopSetUp = gsap.timeline();
 
 const gsapSetUp = () => {
+
+    boxes.forEach((box) => {
+        const y = textOverflowY(box);
+        console.log("y", y);
+    
+        if (y > 0) {
+            isOverflow = true; 
+        }
+    });
+
+    console.log("scroll down, isoverflow: ", isOverflow); //good
 
     tlDesktopSetUp
         .to(primaryTextsDesktop, { //titles
@@ -203,7 +216,7 @@ const gsapSetUp = () => {
 
         .to(scrollBarThumb, { //scrollbar
             duration: 0.5,
-            opacity: 1,
+            opacity: (isOverflow) ? 1 : 0,
             ease: "power3.inOut"
         }, "start")
 
@@ -242,6 +255,7 @@ const textOverflowY = (box) => {
         return y;
     } else {
         return 0;
+        
     }
 }
 
@@ -266,6 +280,16 @@ const observeScrollUp = () => {
 }
 
 const observeScrollDown = (e) => {
+
+    boxes.forEach((box) => {
+        const y = textOverflowY(box);
+        console.log("y", y);
+    
+        if (y > 0) {
+            isOverflow = true; 
+        }
+    });
+    
     //text goes up
     boxes.forEach((box, i) => {
         gsap.to(box, {
@@ -286,6 +310,7 @@ const observeScrollDown = (e) => {
 let lastY = 0; 
 
 const observeScrollDrage = (e) => {
+
     if (e.y > lastY) {
         observeScrollDown();
     } else if (e.y < lastY) {
@@ -293,6 +318,7 @@ const observeScrollDrage = (e) => {
     }
     lastY = e.y;
 }
+
 
 
 
@@ -327,6 +353,13 @@ const reloadPage = () => {
     }
 }
 
+// const adjustDivSize = () => {
+    
+//     divs.forEach(div => {
+//         div.style.height = div.scrollHeight + "px";
+//     });
+// }
+
 
 // -------- init --------
 const init = () => {
@@ -335,7 +368,7 @@ const init = () => {
     linksMobile.forEach(link => link.addEventListener("click", handleLinkClick));
     mainGridDesktop.addEventListener("click", desktopHandleClick);
     mobileQuery.addEventListener("change", () => location.reload());
-    observeST();
+    // observeST();
 };
 
 init();
