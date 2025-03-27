@@ -19,10 +19,6 @@
 
 }
 
-/* *:hover {
-    outline: 1px solid red;
-} */
-
 /* margins */
 
 .margin-bottom-xs {
@@ -75,34 +71,31 @@
 
 /* ---- */
 
+.html{
+    scroll-behavior: smooth;
+}
+
 body {
+    /* position: fixed; */
     font-family: "Labil Grotesk";
-    overflow: hidden;
+    /* overflow: hidden; */
     /* overflow-x: hidden; */
     background-color: var(--background-color);
+/* 
+
+
+ -webkit-overflow-scrolling: auto;
+    overscroll-behavior: none;  */
 }
 
+/* @media  (min-width: 750px) {
+    body {
+      
+    }
+    
+} */
 
-.scrollbar {
-    height: 100%;
-    /* background: #767676; */
-    position: absolute;
-    right: 0;
-    /* display: flex; */
-    /* z-index: -1; */
-    padding: .2rem;
-    padding-left: .5rem;
-}
 
-.scrollbar-thumb {
-    /* align-self: flex-start; */
-    width: 7px;
-    height: 80vh;
-    background: #BDBDBD;
-    border-radius: 7px;
-
-    /* transition: align-self 7s ; */
-}
 
 .grey-text {
     color: #808080;
@@ -113,6 +106,7 @@ body {
 }
 
 .main-grid {
+    position:fixed;
     display: grid;
     grid-template-columns: 39% 41% 1fr;
     height: 100vh;
@@ -136,8 +130,8 @@ body {
 .overflow-container {
     position: relative;
     width: fit-content;
-    overflow: hidden;
-    /* border: 1px black solid; */ /* for debugging */
+    /* overflow: hidden; */
+    border: 1px black solid; 
 }
 
 
@@ -150,8 +144,8 @@ body {
     width: 100%;
     height: 4px;
     background: linear-gradient(transparent, white);
-    /* border: red solid 0.1px; */ /* for debugging */
-    pointer-events: none;
+    border: red solid 0.1px;
+    
 }
 
 .media-cont-start-up {

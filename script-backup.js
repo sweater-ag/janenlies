@@ -237,6 +237,7 @@ const textOverflowY = (box) => {
         return y;
     } else {
         return 0;
+
     }
 }
 
@@ -244,29 +245,25 @@ let isOverflowing = true;
 
 boxes.forEach((box, i) => {
     // console each box overflow 
-    // if (isOverflowing === false) {
-    //     return;
-
-    // }
+    if (isOverflowing === false) {
+        return;
+    }
     console.log("box", i, "overflow", textOverflowY(box));
     gsap.to(box, {
-        y: () => {
-            const overflowValue = -textOverflowY(box);
-            return overflowValue;
-        },
+        y: () => -textOverflowY(box),
         // duration: 1,
         ease: "easeInOut",
         scrollTrigger: {
             trigger: ".main-grid", // Trigger is the body
             start: "50% 50%",
-            end: "bottom 80%",
+            end: "bottom 90%",
             scrub: true,
             markers: true,
-            onEnter: () => console.log(`Box ${i} - Overflow: ${textOverflowY(box)}`),
+            // onEnter: () => addScrollBar()
+            // onLeaveBack: () => console.log("Scrolling Up!")
         }
         
     });
-    
 
 });
 
@@ -292,7 +289,13 @@ const addScrollBar = () => {
      isOverflowing = boxes.some(box => textOverflowY(box) > 0);
     console.log("isOverflowing", isOverflowing, "bodyHeight: ", document.body.scrollHeight, "windowHeight: ", window.innerHeight);
 
-    document.body.style.height = `calc(100vh + ${300}px)`; 
+    if (!isOverflowing) {
+        document.body.style.height = `100vh`; 
+        console.log("No overflow detected, no scrollbar needed.");
+        
+    } else if (isOverflowing) {
+        document.body.style.height = `calc(100vh + ${300}px)`; 
+    }
 }
 
 // -------- init --------
