@@ -19,8 +19,7 @@ const mainGridDesktop = document.querySelector('#desktop-layout .main-grid');
 const desktopText = document.querySelectorAll('#desktop-layout .desktop-text');
 const primaryTextsDesktop = document.querySelectorAll('#desktop-layout .primary-text');
 const overflowContainerDesktop = document.querySelectorAll('#desktop-layout .overflow-container');
-// const scrollBarThumb = document.querySelector('.scrollbar-thumb');
-// const scrollBarTrack = document.querySelector('.scrollbar');
+
 
 const mobileQuery = window.matchMedia('(max-width: 750px)');
 const desktopQuery = window.matchMedia('(min-width: 751px)');
@@ -73,7 +72,7 @@ const handleCloseClick = () => {
     closeButton.classList.add("hidden");
 };
 
-mobileDefault = () => {
+const mobileDefault = () => {
     mobileStartScreen = true;
     startUpImgMobile.classList.remove("hidden");
     gsap.set(linksMobile, { color: "white" });
@@ -185,11 +184,9 @@ const desktopHandleClick = () => {
 let isAnimationComplete = false;
 
 
-
 const tlDesktopSetUp = gsap.timeline();
 
 const gsapSetUp = () => {
-
 
     tlDesktopSetUp
         .to(primaryTextsDesktop, { //titles
@@ -208,8 +205,6 @@ const gsapSetUp = () => {
             opacity: 1,
             ease: "power3.inOut"
         })
-        .add(() => { addScrollBar(); })
-
         .to(pictureDesktopContent, { //garden
             duration: 0.8,
             opacity: 1,
@@ -229,48 +224,6 @@ const gsapSetUp = () => {
 
 // -------- else --------
 
-const boxes = gsap.utils.toArray(".overflow-text");
-
-const textOverflowY = (box) => {
-    const y = (box.scrollHeight - box.closest(".overflow-container").clientHeight) + 6;
-    if (y > 10) {
-        return y;
-    } else {
-        return 0;
-    }
-}
-
-let isOverflowing = true;
-
-boxes.forEach((box, i) => {
-    // console each box overflow 
-    // if (isOverflowing === false) {
-    //     return;
-
-    // }
-    console.log("box", i, "overflow", textOverflowY(box));
-    gsap.to(box, {
-        y: () => {
-            const overflowValue = -textOverflowY(box);
-            return overflowValue;
-        },
-        // duration: 1,
-        ease: "easeInOut",
-        scrollTrigger: {
-            trigger: ".main-grid", // Trigger is the body
-            start: "50% 50%",
-            end: "bottom 80%",
-            scrub: true,
-            markers: true,
-            onEnter: () => console.log(`Box ${i} - Overflow: ${textOverflowY(box)}`),
-        }
-        
-    });
-    
-
-});
-
-
 const beforeClick = () => {
     desktopStartScreen = true;
     desktopDefault();
@@ -287,13 +240,6 @@ const reloadPage = () => {
     }
 }
 
-const addScrollBar = () => {
-    // Check if the text is overflowing
-     isOverflowing = boxes.some(box => textOverflowY(box) > 0);
-    console.log("isOverflowing", isOverflowing, "bodyHeight: ", document.body.scrollHeight, "windowHeight: ", window.innerHeight);
-
-    document.body.style.height = `calc(100vh + ${300}px)`; 
-}
 
 // -------- init --------
 const init = () => {
@@ -303,8 +249,6 @@ const init = () => {
     mainGridDesktop.addEventListener("click", desktopHandleClick);
     mobileQuery.addEventListener("change", () => location.reload());
 
-    window.addEventListener("resize", addScrollBar);
-    // textScroll();
 };
 
 init();

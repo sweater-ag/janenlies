@@ -81,11 +81,7 @@ body {
     /* overflow: hidden; */
     /* overflow-x: hidden; */
     background-color: var(--background-color);
-/* 
-
-
- -webkit-overflow-scrolling: auto;
-    overscroll-behavior: none;  */
+    /* height: calc(100vh + 100px); */
 }
 
 /* @media  (min-width: 750px) {
