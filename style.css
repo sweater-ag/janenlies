@@ -89,8 +89,9 @@ body {
     position: absolute;
     right: 0;
     /* display: flex; */
-    z-index: -1;
-    padding-right: .2rem;
+    /* z-index: -1; */
+    padding: .2rem;
+    padding-left: .5rem;
 }
 
 .scrollbar-thumb {
@@ -189,6 +190,7 @@ body {
     /* background-color: blue; */  /* for debugging */
     padding-bottom: 3.5rem;
     align-self: end;
+    z-index: 2;
 }
 
 .image {

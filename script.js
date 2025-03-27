@@ -20,6 +20,7 @@ const desktopText = document.querySelectorAll('#desktop-layout .desktop-text');
 const primaryTextsDesktop = document.querySelectorAll('#desktop-layout .primary-text');
 const overflowContainerDesktop = document.querySelectorAll('#desktop-layout .overflow-container');
 const scrollBarThumb = document.querySelector('.scrollbar-thumb');
+const scrollBarTrack = document.querySelector('.scrollbar');
 
 const mobileQuery = window.matchMedia('(max-width: 750px)');
 const desktopQuery = window.matchMedia('(min-width: 751px)');
@@ -47,10 +48,10 @@ const showContent = (id) => {
 const handleLinkClick = (e) => {
     const targetId = e.target.id + "-content";
     console.log("start screen", mobileStartScreen);
-    
+
     if (mobileStartScreen) {
         mobileStartUp();
-    } 
+    }
 
 
     //Content logic
@@ -95,7 +96,7 @@ const mobileStartUp = () => {
             opacity: 0,
             ease: "power3.inOut"
         }, "start")
-        .add(() => { stickyContainerMobile.classList.add("titles-cont--open");});
+        .add(() => { stickyContainerMobile.classList.add("titles-cont--open"); });
     console.log("executes only once");
 }
 
@@ -113,7 +114,7 @@ const contentAppearTransition = () => {
             { y: 0, opacity: 1, duration: 0.8, ease: "power2.inOut" },
             "<+0.3"
         )
-        .fromTo(mobileCopyRightText, 
+        .fromTo(mobileCopyRightText,
             { opacity: 0, y: 1 },
             { y: 0, opacity: 1, duration: 0.5, ease: "power2.inOut" },
             "start+=0.5"
@@ -124,7 +125,7 @@ const contentDisappearTransition = () => {
     console.log("CLICKED TO CLOSE ");
     const tl = gsap.timeline();
     tl
-        .fromTo(mobileCopyRightText, 
+        .fromTo(mobileCopyRightText,
             { opacity: 1, y: 0 },
             { opacity: 0, y: 1, duration: 0.5, ease: "power2.inOut" },
             "start"
@@ -147,13 +148,14 @@ const contentDisappearTransition = () => {
 let desktopStartScreen;
 
 
-desktopDefault = () => {
+const desktopDefault = () => {
     desktopText.forEach(element => element.classList.add("hidden"));
     startUpImgDesktop.classList.remove("hidden");
+    // scrollBarThumb.classList.add("hidden");
     mainGridDesktop.style.cursor = "pointer";
     desktopStartScreen = true;
     // pictureDesktopContent.classList.add("hidden");
-    
+    gsap.set(scrollBarThumb, { opacity: 0 });
     gsap.set(primaryTextsDesktop, { color: "white" });
     gsap.set(pictureDesktopContent, { opacity: 0 });
     gsap.set(startUpImgDesktop, { opacity: 1 });
@@ -165,6 +167,7 @@ const desktopHandleClick = () => {
     // console.log("desktop click, desktopStartScreen: ", desktopStartScreen);
     if (desktopStartScreen) {
         // pictureDesktopContent.classList.remove("hidden");
+        // scrollBarThumb.classList.remove("hidden");
         desktopText.forEach(element => element.classList.remove("hidden"));
         // mainGridDesktop.style.cursor = "default";
         desktopStartScreen = false;
@@ -177,9 +180,6 @@ const desktopHandleClick = () => {
         tlDesktopSetUp.reverse();
         desktopStartScreen = true;
         console.log("desktop reverse", tlDesktopSetUp.time());
-
-        // desktopDefault();
-        // location.reload();
     }
 };
 
@@ -188,7 +188,7 @@ let isAnimationComplete = false;
 const tlDesktopSetUp = gsap.timeline();
 
 const gsapSetUp = () => {
-   
+
     tlDesktopSetUp
         .to(primaryTextsDesktop, { //titles
             duration: 0.5,
@@ -198,6 +198,12 @@ const gsapSetUp = () => {
         .to(startUpImgDesktop, { //image black
             duration: 0.5,
             opacity: 0,
+            ease: "power3.inOut"
+        }, "start")
+
+        .to(scrollBarThumb, { //scrollbar
+            duration: 0.5,
+            opacity: 1,
             ease: "power3.inOut"
         }, "start")
 
@@ -231,47 +237,24 @@ const boxes = gsap.utils.toArray(".overflow-text");
 
 const textOverflowY = (box) => {
 
-    const y = (box.scrollHeight - box.closest(".overflow-container").clientHeight) +6;
-    if (y>10){
-    return y;
+    const y = (box.scrollHeight - box.closest(".overflow-container").clientHeight) + 6;
+    if (y > 10) {
+        return y;
     } else {
         return 0;
     }
 }
 
-
-
-// const scrollBarThumbHeight = () => {
-
-//     let biggestOverflow = 0;
-//     // TEH OVERFLOW OF THE BIGGEST BOX
-//     boxes.forEach((box, i) => {
-//         const overflow = textOverflowY(box);
-//         if (overflow > biggestOverflow) {
-//             biggestOverflow = overflow;
-//         }
-//     } );
-
-//     return (window.innerHeight / (window.innerHeight + biggestOverflow)) * window.innerHeight;
-// }
-
-
-// boxes.forEach((box, i) => {
-//    console.log(i, "box text overflow, px", textOverflowY(box));
-// });
-
-// scrollBarThumb.style.height = scrollBarThumbHeight() + "px";
-
-const observeScrollUp = () => { 
+const observeScrollUp = () => {
     //text goes down
 
     console.log("scroll up"); //good
     boxes.forEach((box, i) => {
-        gsap.to(box, { 
-            duration:1,
+        gsap.to(box, {
+            duration: 1,
             ease: "power2.out",
             y: 0,
-            }
+        }
         );
 
         gsap.to(scrollBarThumb, {
@@ -283,54 +266,49 @@ const observeScrollUp = () => {
 }
 
 const observeScrollDown = (e) => {
-
+    //text goes up
     boxes.forEach((box, i) => {
-        // console.log(i, "box text overflow, px", textOverflowY(box));
-        gsap.to(box, { 
-            duration:1,
+        gsap.to(box, {
+            duration: 1,
             //  ease: "elastic.out",
             y: -textOverflowY(box),
-            }
-        );  
-
-        console.log("window.innerHeight", window.innerHeight- 250);
-
+        }
+        );
         gsap.to(scrollBarThumb, {
             duration: 1,
             // y: ( window.innerHeight - scrollBarThumb.height),
-            y: (window.innerHeight - (scrollBarThumb.clientHeight+ 2)),
+            y: (window.innerHeight - (scrollBarThumb.clientHeight + 2)),
             // ease: "power2.out",
         });
     });
 }
 
+let lastY = 0; 
+
+const observeScrollDrage = (e) => {
+    if (e.y > lastY) {
+        observeScrollDown();
+    } else if (e.y < lastY) {
+        observeScrollUp(); 
+    }
+    lastY = e.y;
+}
 
 
-const  observeST = () => {
 
-    // scrollBarThumb.style.height = ;
+const observeST = () => {
 
     ScrollTrigger.observe({
-        type: "wheel,touch, scroll", 
+        target: scrollBarThumb,
+        onDrag: (e) => observeScrollDrage(e),
+    });
+
+    ScrollTrigger.observe({
+        type: "wheel,touch, scroll",
         targets: boxes,
         onUp: (e) => observeScrollUp(),
         onDown: (e) => observeScrollDown(e.deltaY),
-      });
-}
-
-
-
-const handleScroll = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-}
-
-const handleResize = (e) => {
-    // it is just easier to reload, then to fix the weird glitching
-    // beforeClick();
-    // console.log("resize", e);
-
-    location.reload();
+    });
 }
 
 const beforeClick = () => {
@@ -343,7 +321,7 @@ const beforeClick = () => {
 const reloadPage = () => {
     const selection = window.getSelection();
     console.log("selection", selection.toString().length);
-    if((selection.toString().length <= 0) && (isAnimationComplete)) {
+    if ((selection.toString().length <= 0) && (isAnimationComplete)) {
 
         location.reload();
     }
@@ -356,22 +334,8 @@ const init = () => {
     closeButton.addEventListener("click", handleCloseClick);
     linksMobile.forEach(link => link.addEventListener("click", handleLinkClick));
     mainGridDesktop.addEventListener("click", desktopHandleClick);
-    mobileQuery.addEventListener("change", handleResize);
+    mobileQuery.addEventListener("change", () => location.reload());
     observeST();
 };
 
 init();
-
-// document.addEventListener("keydown", (e) => {
-//     if (e.key === "p" || e.key === "P") {
-//       tlDesktopSetUp.pause(); // Pause the animation when 'P' is pressed
-//       console.log("Animation paused");
-//     } else if (e.key === "r" || e.key === "R") {
-//       tlDesktopSetUp.reverse(); // Reverse the animation when 'R' is pressed
-//       console.log("Animation reversed");
-//     } else if (e.key === "s" || e.key === "S") {
-//       tlDesktopSetUp.play(); // Play the animation when 'S' is pressed
-//       console.log("Animation playing");
-//     }
-//   });
-
