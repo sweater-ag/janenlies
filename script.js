@@ -1,5 +1,4 @@
 gsap.registerPlugin(ScrollTrigger);
-// gsap.registerPlugin(Observer) 
 
 // mobile 
 const linksMobile = document.querySelectorAll('#mobile-layout .link');
@@ -54,8 +53,6 @@ const handleLinkClick = (e) => {
         mobileStartUp();
     }
 
-
-    //Content logic
     if (currentlyOpenContentId === targetId) {
         hideMobileOpenContent();
         currentlyOpenContentId = null;
@@ -163,8 +160,7 @@ const desktopDefault = () => {
 }
 
 const desktopHandleClick = () => {
-    // observeST();
-    // console.log("desktop click, desktopStartScreen: ", desktopStartScreen);
+
     if (desktopStartScreen) {
         desktopText.forEach(element => element.classList.remove("hidden"));
         // mainGridDesktop.style.cursor = "default";
@@ -231,14 +227,7 @@ const beforeClick = () => {
     hideMobileOpenContent();
 };
 
-const reloadPage = () => {
-    const selection = window.getSelection();
-    console.log("selection", selection.toString().length);
-    if ((selection.toString().length <= 0) && (isAnimationComplete)) {
 
-        location.reload();
-    }
-}
 
 
 // -------- init --------
@@ -249,6 +238,9 @@ const init = () => {
     mainGridDesktop.addEventListener("click", desktopHandleClick);
     mobileQuery.addEventListener("change", () => location.reload());
 
+    document.querySelectorAll('.overflow-text').forEach(element => {
+        element.innerHTML += '<br><span style="display: block; height: 10px;"></span>';   
+     });
 };
 
 init();
